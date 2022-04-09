@@ -1,9 +1,7 @@
 package com.company.entities;
 
-import com.company.entities.Product;
-
 public class Sweet extends Product {
-    boolean dietetic = false;
+    boolean dietetic;
 
     public Sweet(String name, Double price, boolean dietetic) {
         super(name, price);

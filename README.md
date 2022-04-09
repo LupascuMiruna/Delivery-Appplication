@@ -1,4 +1,4 @@
-# Delivery-Appplication
+# Delivery-Application
 
 PAO project
 
@@ -21,7 +21,7 @@ An user can:
 * * *
 In the background it will also be done:
 
-* sort the restaurants ascending after their number of raitings and if equals, they will be compared after the name
+* sort the restaurants ascending after their number of ratings and if equals, they will be compared after the name
 * assign random courier
 * get the final price of the cart
 

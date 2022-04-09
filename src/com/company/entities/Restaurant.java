@@ -5,7 +5,7 @@ import java.util.*;
 public class Restaurant {
     private String name;
     private Adress adress;
-    private Integer numberRaitings = 0;
+    private Integer numberRatings = 0;
     private double score = 0.0;
     private ArrayList<Product> products = new ArrayList<Product>();
 
@@ -41,12 +41,12 @@ public class Restaurant {
         this.adress = adress;
     }
 
-    public Integer getNumberRaitings() {
-        return numberRaitings;
+    public Integer getNumberRatings() {
+        return numberRatings;
     }
 
-    public void setNumberRaitings(Integer numberRaitings) {
-        this.numberRaitings = numberRaitings;
+    public void setNumberRatings(Integer numberRatings) {
+        this.numberRatings = numberRatings;
     }
 
     public double getScore() {
@@ -61,17 +61,17 @@ public class Restaurant {
         return numberRestaurants;
     }
 
-    public void receiveRaiting(double raiting) {
-        this.numberRaitings += 1;
-        this.score += raiting;
+    public void receiveRating(double rating) {
+        this.numberRatings += 1;
+        this.score += rating;
         if (bestRatedRestaurant == null || bestRatedRestaurant.getRate() < this.getRate())
             bestRatedRestaurant = this;
     }
 
     public double getRate() {
-        if (this.numberRaitings == 0)
+        if (this.numberRatings == 0)
             return 0.0;
-        return this.score / this.numberRaitings;
+        return this.score / this.numberRatings;
     }
 
     public void addProducts(ArrayList<Product> productsToAdd) {
@@ -95,12 +95,12 @@ public class Restaurant {
         System.out.println("Rate it with a DOUBLE number from 1,0 to 10,0:");
         boolean ok = false;
         do {
-            double raiting = scanner.nextDouble();
-            if (raiting < 1.0 || raiting > 10.0)
+            double rating = scanner.nextDouble();
+            if (rating < 1.0 || rating > 10.0)
                 System.out.println("Wrong format! Please input a DOUBLE number from 1,0 to 10,0: ");
             else {
                 ok = true;
-                this.receiveRaiting(raiting);
+                this.receiveRating(rating);
                 System.out.println("Thank you for your feedback! <3");
             }
         } while (!ok);
@@ -205,7 +205,7 @@ public class Restaurant {
         return "Restaurant{" +
                 "name='" + name + '\'' +
                 ", adress=" + adress +
-                ", numberRaitings=" + numberRaitings +
+                ", numberRatings=" + numberRatings +
                 ", score=" + score +
                 '}';
     }

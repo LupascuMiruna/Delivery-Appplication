@@ -8,8 +8,8 @@ public class User {
     private Adress adress;
     private String password;
     private String email;
-    private boolean isAdmin = false;
-    private TreeSet<Order> orders = new TreeSet<Order>();
+    private boolean isAdmin;
+    private TreeSet<Order> orders = new TreeSet<>();
     //list of orders
 
     public User(String name, Adress adress, String password, String email) {
@@ -81,26 +81,6 @@ public class User {
         if (this.email != u.email || this.password != u.password)
             return false;
         return true;
-    }
-
-    public void addRaiting(Restaurant restaurant, double raiting) {
-        restaurant.receiveRaiting(raiting);
-    }
-
-
-    static User searchUser(String email, String password, ArrayList<User> users) {
-        ///////////binary search
-        for (User user : users) {
-            email = email.trim();
-            password = password.trim();
-            if (user.email.equals(email) && user.password.equals(password))
-                return user;
-        }
-        return null;
-    }
-
-    static void addUser(User user, ArrayList<User> users) {
-        users.add(user);
     }
 
     public void seeOrders() {

@@ -1,6 +1,10 @@
 package com.company.entities;
 
+import java.util.Arrays;
 import java.util.Scanner;
+import com.company.exceptions.CountyException;
+
+
 
 public class Adress {
     protected County county;
@@ -8,17 +12,30 @@ public class Adress {
     protected String street;
     protected Integer number;
 
-    public Adress(County country, String city, String street, Integer number) {
-        this.county = country;
+    public Adress(County county, String city, String street, Integer number) {
+        this.county = county;
         this.city = city;
         this.street = street;
         this.number = number;
     }
 
     static public Adress createNewAddress(Scanner scanner) {
-        System.out.println("County:");
-        String countyStr = scanner.next();
-        County county = County.valueOf(countyStr.toUpperCase());
+        County county = null;
+        while(county == null) {
+            System.out.println("County:");
+            String countyStr = scanner.next();
+
+            try {
+                county = Arrays.stream(County.values())
+                        .filter(c -> c.getValue().equalsIgnoreCase(countyStr))
+                        .findFirst()
+                        .orElseThrow(() -> new CountyException("Wrong county")); ///it needs a lambda expression that returns an exception instance
+            }
+            catch (CountyException exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+
         System.out.println("City:");
         String city = scanner.next();
         System.out.println("Street:");
@@ -28,12 +45,12 @@ public class Adress {
         return new Adress(county, city, street, number);
     }
 
-    public County getCountry() {
+    public County getCounty() {
         return county;
     }
 
-    public void setCountry(County country) {
-        this.county = country;
+    public void setCounty(County county) {
+        this.county = county;
     }
 
     public String getCity() {

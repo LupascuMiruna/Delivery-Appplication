@@ -3,15 +3,15 @@ package com.company.entities;
 public class Courier {
     private String name;
     private String transport;
-    private Double raiting = 0.0;
-    private Integer numberRaitings = 0;
+    private Double rating = 0.0;
+    private Integer numberRatings = 0;
     private Double score = 0.0;
 
-    public Courier(String name, String transport, Double raiting, Integer numberRaitings, Double score) {
+    public Courier(String name, String transport, Double rating, Integer numberRatings, Double score) {
         this.name = name;
         this.transport = transport;
-        this.raiting = raiting;
-        this.numberRaitings = numberRaitings;
+        this.rating = rating;
+        this.numberRatings = numberRatings;
         this.score = score;
     }
 
@@ -36,20 +36,20 @@ public class Courier {
         this.transport = transport;
     }
 
-    public Double getRaiting() {
-        return raiting;
+    public Double getRating() {
+        return rating;
     }
 
-    public void setRaiting(Double raiting) {
-        this.raiting = raiting;
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
-    public Integer getNumberRaitings() {
-        return numberRaitings;
+    public Integer getNumberRatings() {
+        return numberRatings;
     }
 
-    public void setNumberRaitings(Integer numberRaitings) {
-        this.numberRaitings = numberRaitings;
+    public void setNumberRatings(Integer numberRatings) {
+        this.numberRatings = numberRatings;
     }
 
     public Double getScore() {
@@ -65,8 +65,8 @@ public class Courier {
         return "Courier{" +
                 "name='" + name + '\'' +
                 ", transport='" + transport + '\'' +
-                ", raiting=" + raiting +
-                ", numberRaitings=" + numberRaitings +
+                ", rating=" + rating +
+                ", numberRatings=" + numberRatings +
                 ", score=" + score +
                 '}';
     }

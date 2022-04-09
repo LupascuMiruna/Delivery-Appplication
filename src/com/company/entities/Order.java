@@ -10,7 +10,7 @@ public class Order implements Comparable<Order> {
     private User user;
     private Courier courier = null;
     private Adress adress = null;
-    private ArrayList<Product> products = new ArrayList<Product>();
+    private ArrayList<Product> products;
     private Integer timePrepare = 0;
     private Double finalPrice = 0.0;
     public Scanner scanner = ConsoleReader.getScanner();
