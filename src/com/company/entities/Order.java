@@ -1,5 +1,7 @@
 package com.company.entities;
 
+import com.company.services.AuditService;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
@@ -15,6 +17,8 @@ public class Order implements Comparable<Order> {
     private Double finalPrice = 0.0;
     public Scanner scanner = ConsoleReader.getScanner();
 
+    private AuditService auditService;
+
     public Order(Restaurant restaurant, User user, ArrayList<Product> products, Integer timePrepare, Double finalPrice) {
         this.restaurant = restaurant;
         this.user = user;
@@ -22,6 +26,7 @@ public class Order implements Comparable<Order> {
         this.timePrepare = timePrepare;
         this.finalPrice = finalPrice;
         this.id = UUID.randomUUID();
+        this.auditService = AuditService.getInstance();
     }
 
     public Order(Restaurant restaurant, User user, ArrayList<Product> products) {
@@ -31,6 +36,7 @@ public class Order implements Comparable<Order> {
         this.assignCourier();
         this.assignAddress();
         this.id = UUID.randomUUID();
+        this.auditService = AuditService.getInstance();
     }
 
     static Order createNewOrder(Restaurant currentRestaurant, User currentUser, ArrayList<Product> pickedProducts) {
@@ -127,10 +133,12 @@ public class Order implements Comparable<Order> {
             int option = scanner.nextInt();
 
             if (option == 1) {
+
                 this.adress = this.user.getAdress();
                 return;
             }
             if (option == 2) {
+
                 Adress currentAddress = Adress.createNewAddress(scanner);
                 this.adress = currentAddress;
                 return;

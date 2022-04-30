@@ -1,6 +1,10 @@
 package com.company.entities;
 
+import com.company.services.AuditService;
+import com.company.services.ReadService;
+
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Restaurant {
     private String name;
@@ -14,12 +18,15 @@ public class Restaurant {
     public Scanner scanner = ConsoleReader.getScanner();
     static ArrayList<Courier> couriers = new ArrayList<Courier>();
 
+    private AuditService auditService;
+    private static ReadService readService = ReadService.getInstance();
+
     static {
-        couriers.add(new Courier("Alexandru", "bicycle"));
-        couriers.add(new Courier("Costel", "scooter"));
+        couriers = readService.readCouriers();
     }
 
     public Restaurant(String name, Adress adress) {
+        this.auditService = AuditService.getInstance();
         this.name = name;
         this.adress = adress;
         numberRestaurants += 1;
@@ -131,6 +138,7 @@ public class Restaurant {
                 ok = false;
                 continue;
             }
+            auditService.writeTime("remove_product_from_cart");
             pickedProducts.remove(option);
         } while (ok);
 
@@ -156,6 +164,7 @@ public class Restaurant {
             }
 
             if (option < cartOption) {
+                auditService.writeTime("add_product_to_cart");
                 pickedProducts.add(this.products.get(option));
                 continue;
             }
@@ -185,6 +194,7 @@ public class Restaurant {
             option = scanner.nextInt();
         }
         if (option == 1) {
+            auditService.writeTime("see_order_details");
             System.out.println("Final price: " + currentOrder.getFinalPrice());
             System.out.println("The adress will be " + currentOrder.getAdress());
         }
@@ -199,6 +209,11 @@ public class Restaurant {
         System.out.println("Your courier will be " + currentCourier.toString());
         return currentCourier;
     }
+    public Product getSpecialProduct() {
+        Product specialProduct = (this.products.stream().filter(p ->p.getName().equals("Special"))).findFirst().orElse(null);
+        return specialProduct;
+    }
+
 
     @Override
     public String toString() {

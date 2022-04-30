@@ -1,10 +1,7 @@
 package com.company.services;
 
-import com.company.entities.ConsoleReader;
-import com.company.entities.Order;
-import com.company.entities.Restaurant;
+import com.company.entities.*;
 import com.company.interfaces.IMenuService;
-import com.company.entities.User;
 
 import java.util.Scanner;
 
@@ -16,8 +13,11 @@ public class MenuService implements IMenuService {
     private UserService userMgr = new UserService();
     private RestaurantService restaurantMgr = new RestaurantService();
     public Scanner scanner = ConsoleReader.getScanner();
+    private AuditService auditService;
+    private WriteService writeService = WriteService.getInstance();
 
     private MenuService() {
+        this.auditService = AuditService.getInstance();
     }
 
     public void start() {
@@ -61,22 +61,44 @@ public class MenuService implements IMenuService {
             System.out.println("1) Give feedback.");
             System.out.println("2) Order");
             System.out.println("3) See my orders");
-            System.out.println("4) Logout");
+            System.out.println("4) Write in file details about this restauant");
+            System.out.println("5) Write in file details about my profile");
+            System.out.println("6) Write in file details about special product");
+            System.out.println("7) Logout");
 
             int option = scanner.nextInt();
             switch (option) {
                 case 1:
+                    auditService.writeTime("add_raiting");
                     currentRestaurant.addRating();
                     break;
                 case 2:
+                    auditService.writeTime("order");
                     currentOrder = currentRestaurant.placeOrder(currentUser);
                     break;
                 case 3:
+                    auditService.writeTime("see_my_orders");
                     currentUser.seeOrders();
                     break;
                 case 4:
+                    auditService.writeTime("write_details_restaurant");
+                    writeService.writeDetails(currentRestaurant, currentRestaurant.getClass());
+                    break;
+                case 5:
+                    auditService.writeTime("write_details_profile");
+                    writeService.writeDetails(currentUser, currentUser.getClass());
+                    break;
+                case 6:
+                    auditService.writeTime("write_just_special_product");
+                    Product specialProduct = currentRestaurant.getSpecialProduct();
+                    writeService.writeDetails(specialProduct, specialProduct.getClass());
+                    break;
+
+                case 7:
+                    auditService.writeTime("logout");
                     this.logOut();
                     break;
+
                 default:
                     success = false;
                     System.out.println("Invalid option! :(");
@@ -103,8 +125,10 @@ public class MenuService implements IMenuService {
                 System.out.println("Your option:");
                 option = scanner.nextInt();
                 if (option == 1) {
+                    auditService.writeTime("login");
                     currentUser = userMgr.login();
                 } else if (option == 2) {
+                    auditService.writeTime("register");
                     currentUser = userMgr.register();
                 } else if (option == 3) {
                     return;//toDo
