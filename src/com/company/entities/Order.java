@@ -1,6 +1,9 @@
 package com.company.entities;
 
+import com.company.services.AuditService;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -10,30 +13,34 @@ public class Order implements Comparable<Order> {
     private User user;
     private Courier courier = null;
     private Adress adress = null;
-    private ArrayList<Product> products;
+    private List<Product> products;
     private Integer timePrepare = 0;
     private Double finalPrice = 0.0;
     public Scanner scanner = ConsoleReader.getScanner();
 
-    public Order(Restaurant restaurant, User user, ArrayList<Product> products, Integer timePrepare, Double finalPrice) {
+    private AuditService auditService;
+
+    public Order(Restaurant restaurant, User user, List<Product> products, Integer timePrepare, Double finalPrice) {
         this.restaurant = restaurant;
         this.user = user;
         this.products = products;
         this.timePrepare = timePrepare;
         this.finalPrice = finalPrice;
         this.id = UUID.randomUUID();
+        this.auditService = AuditService.getInstance();
     }
 
-    public Order(Restaurant restaurant, User user, ArrayList<Product> products) {
+    public Order(Restaurant restaurant, User user, List<Product> products) {
         this.restaurant = restaurant;
         this.user = user;
         this.products = products;
         this.assignCourier();
         this.assignAddress();
         this.id = UUID.randomUUID();
+        this.auditService = AuditService.getInstance();
     }
 
-    static Order createNewOrder(Restaurant currentRestaurant, User currentUser, ArrayList<Product> pickedProducts) {
+    static Order createNewOrder(Restaurant currentRestaurant, User currentUser, List<Product> pickedProducts) {
         Order currentOrder = new Order(currentRestaurant, currentUser, pickedProducts);
         currentUser.addOrder(currentOrder);
         return currentOrder;
@@ -75,7 +82,7 @@ public class Order implements Comparable<Order> {
         this.user = user;
     }
 
-    public ArrayList<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
@@ -127,10 +134,12 @@ public class Order implements Comparable<Order> {
             int option = scanner.nextInt();
 
             if (option == 1) {
+
                 this.adress = this.user.getAdress();
                 return;
             }
             if (option == 2) {
+
                 Adress currentAddress = Adress.createNewAddress(scanner);
                 this.adress = currentAddress;
                 return;

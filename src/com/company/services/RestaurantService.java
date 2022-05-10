@@ -4,24 +4,27 @@ import com.company.entities.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class RestaurantService {
-    ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+    List<Restaurant> restaurants = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
+    ReadService readService;
 
     public RestaurantService() {
         Adress a1 = new Adress(County.IASI, "Iasi", "Unirii", 20);
-        restaurants.add(new Restaurant("Naive", a1));
-        restaurants.add(new Restaurant("Lente", a1));
-
-
-        ArrayList<Product> productsToAdd = new ArrayList<Product>();
-        productsToAdd.add(new Drink("Coca-cola", 12.0, false));
-        productsToAdd.add(new Drink("Pina Colada", 30.0, true));
-        productsToAdd.add(new Sweet("Tiramisu", 20.0, true));
-        productsToAdd.add(new Pizza("Capricioasa", 35.0, false));
-        restaurants.get(0).addProducts(productsToAdd);
+        this.readService = ReadService.getInstance();
+        
+        this.restaurants = readService.readRestaurants();
+        
+//        ArrayList<Product> productsToAdd = new ArrayList<>();
+//        productsToAdd.add(new Drink("Coca-cola", 12.0, false));
+//        productsToAdd.add(new Drink("Special", 32.0, true));
+//        productsToAdd.add(new Drink("Pina Colada", 30.0, true));
+//        productsToAdd.add(new Sweet("Tiramisu", 20.0, true));
+//        productsToAdd.add(new Pizza("Capricioasa", 35.0, false));
+//        restaurants.get(0).addProducts(productsToAdd);
     }
 
     public Restaurant chooseRestaurant() {

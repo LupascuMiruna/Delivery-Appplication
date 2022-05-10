@@ -1,25 +1,32 @@
 package com.company.entities;
 
+import com.company.services.AuditService;
+import com.company.services.ReadService;
+
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Restaurant {
     private String name;
     private Adress adress;
     private Integer numberRatings = 0;
     private double score = 0.0;
-    private ArrayList<Product> products = new ArrayList<Product>();
+    private List<Product> products = new ArrayList<>();
 
     static Integer numberRestaurants = 0;
     static Restaurant bestRatedRestaurant = null;
     public Scanner scanner = ConsoleReader.getScanner();
-    static ArrayList<Courier> couriers = new ArrayList<Courier>();
+    static List<Courier> couriers = new ArrayList<>();
+
+    private AuditService auditService;
+    private static ReadService readService = ReadService.getInstance();
 
     static {
-        couriers.add(new Courier("Alexandru", "bicycle"));
-        couriers.add(new Courier("Costel", "scooter"));
+        couriers = readService.readCouriers();
     }
 
     public Restaurant(String name, Adress adress) {
+        this.auditService = AuditService.getInstance();
         this.name = name;
         this.adress = adress;
         numberRestaurants += 1;
@@ -74,7 +81,7 @@ public class Restaurant {
         return this.score / this.numberRatings;
     }
 
-    public void addProducts(ArrayList<Product> productsToAdd) {
+    public void addProducts(List<Product> productsToAdd) {
         this.products.addAll(productsToAdd);
     }
 
@@ -87,7 +94,7 @@ public class Restaurant {
         return products.size();
     }
 
-    public ArrayList<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
@@ -106,7 +113,7 @@ public class Restaurant {
         } while (!ok);
     }
 
-    private void cartAction(ArrayList<Product> pickedProducts) {
+    private void cartAction(List<Product> pickedProducts) {
         boolean ok = true;
         int option;
 
@@ -131,13 +138,14 @@ public class Restaurant {
                 ok = false;
                 continue;
             }
+            auditService.writeTime("remove_product_from_cart");
             pickedProducts.remove(option);
         } while (ok);
 
     }
 
-    private ArrayList<Product> pickProducts() {
-        ArrayList<Product> pickedProducts = new ArrayList<Product>();
+    private List<Product> pickProducts() {
+        List<Product> pickedProducts = new ArrayList<Product>();
         Integer cartOption = this.products.size();
         Integer closeOption = cartOption + 1;
         Integer option;
@@ -156,6 +164,7 @@ public class Restaurant {
             }
 
             if (option < cartOption) {
+                auditService.writeTime("add_product_to_cart");
                 pickedProducts.add(this.products.get(option));
                 continue;
             }
@@ -169,7 +178,7 @@ public class Restaurant {
     }
 
     public Order placeOrder(User currentUser) {
-        ArrayList<Product> pickedProducts = this.pickProducts();
+        List<Product> pickedProducts = this.pickProducts();
         Order currentOrder = Order.createNewOrder(this, currentUser, pickedProducts);
 
         System.out.println("Congratulations, your order has been successfully placed!");
@@ -185,6 +194,7 @@ public class Restaurant {
             option = scanner.nextInt();
         }
         if (option == 1) {
+            auditService.writeTime("see_order_details");
             System.out.println("Final price: " + currentOrder.getFinalPrice());
             System.out.println("The adress will be " + currentOrder.getAdress());
         }
@@ -199,6 +209,11 @@ public class Restaurant {
         System.out.println("Your courier will be " + currentCourier.toString());
         return currentCourier;
     }
+    public Product getSpecialProduct() {
+        Product specialProduct = (this.products.stream().filter(p ->p.getName().equals("Special"))).findFirst().orElse(null);
+        return specialProduct;
+    }
+
 
     @Override
     public String toString() {

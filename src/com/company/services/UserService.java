@@ -7,22 +7,17 @@ import com.company.entities.User;
 import com.company.interfaces.IUserManager;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserService implements IUserManager {
-    public static ArrayList<User> users = new ArrayList<User>();
+    public static List<User> users = new ArrayList<User>();
     public Scanner scanner = ConsoleReader.getScanner();
+    private ReadService readService;
 
     public UserService() {
-        Adress a1 = new Adress(County.IASI, "Iasi", "Unirii", 20);
-
-        User u1 = new User("Miruna", a1, "123", "miruna@gmail.com");
-        User u2 = new User("Miru", a1, "000", "miruna@yahoo.com");
-
-        u1.setAdmin(true);
-
-        users.add(u1);
-        users.add(u2);
+        this.readService = ReadService.getInstance();
+        users = readService.readUsers();
     }
 
     static User searchUser(String email, String password) {
