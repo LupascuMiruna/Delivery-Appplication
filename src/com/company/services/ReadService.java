@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static java.lang.Double.parseDouble;
@@ -22,9 +23,9 @@ public class ReadService {
         return instance;
     }
 
-    public ArrayList<User> readUsers() {
+    public List<User> readUsers() {
 
-        ArrayList<User> users = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         try {
             BufferedReader buffer = new BufferedReader(new FileReader("Files/user.csv"));
             String line = buffer.readLine();
@@ -53,8 +54,8 @@ public class ReadService {
     }
 
     
-    public ArrayList<Restaurant> readRestaurants() {
-        ArrayList<Restaurant> restaurants = new ArrayList<>();
+    public List<Restaurant> readRestaurants() {
+        List<Restaurant> restaurants = new ArrayList<>();
         try {
             BufferedReader buffer = new BufferedReader(new FileReader("Files/restaurant.csv"));
             String line = buffer.readLine();
@@ -71,7 +72,7 @@ public class ReadService {
                 catch (CountyException exception) {
                     System.out.println(exception.getMessage());
                 }
-                ArrayList<Product> products = this.readProducts(array[0]);
+                List<Product> products = this.readProducts(array[0]);
 
                 Restaurant restaurant = new Restaurant(array[1], new Adress(county,array[3],array[4], Integer.parseInt(array[5])));
                 restaurant.addProducts(products);
@@ -95,8 +96,8 @@ public class ReadService {
         return new Pizza(array[1], parseDouble(array[2]), Boolean.parseBoolean(array[3]));
     }
 
-    public ArrayList<Product> readProducts(String number) {
-        ArrayList<Product> products = new ArrayList<>();
+    public List<Product> readProducts(String number) {
+        List<Product> products = new ArrayList<>();
         try {
             String path = "Files/products_" + number + ".csv";
             BufferedReader buffer = new BufferedReader(new FileReader(path));
@@ -117,8 +118,8 @@ public class ReadService {
         return products;
     }
 
-    public ArrayList<Courier> readCouriers() {
-        ArrayList<Courier> couriers = new ArrayList<>();
+    public List<Courier> readCouriers() {
+        List<Courier> couriers = new ArrayList<>();
         try {
             BufferedReader buffer = new BufferedReader(new FileReader("Files/courier.csv"));
             String line = buffer.readLine();

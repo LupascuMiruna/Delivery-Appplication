@@ -7,10 +7,11 @@ import com.company.entities.User;
 import com.company.interfaces.IUserManager;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserService implements IUserManager {
-    public static ArrayList<User> users = new ArrayList<User>();
+    public static List<User> users = new ArrayList<User>();
     public Scanner scanner = ConsoleReader.getScanner();
     private ReadService readService;
 

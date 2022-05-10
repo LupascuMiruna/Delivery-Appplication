@@ -11,12 +11,12 @@ public class Restaurant {
     private Adress adress;
     private Integer numberRatings = 0;
     private double score = 0.0;
-    private ArrayList<Product> products = new ArrayList<Product>();
+    private List<Product> products = new ArrayList<>();
 
     static Integer numberRestaurants = 0;
     static Restaurant bestRatedRestaurant = null;
     public Scanner scanner = ConsoleReader.getScanner();
-    static ArrayList<Courier> couriers = new ArrayList<Courier>();
+    static List<Courier> couriers = new ArrayList<>();
 
     private AuditService auditService;
     private static ReadService readService = ReadService.getInstance();
@@ -81,7 +81,7 @@ public class Restaurant {
         return this.score / this.numberRatings;
     }
 
-    public void addProducts(ArrayList<Product> productsToAdd) {
+    public void addProducts(List<Product> productsToAdd) {
         this.products.addAll(productsToAdd);
     }
 
@@ -94,7 +94,7 @@ public class Restaurant {
         return products.size();
     }
 
-    public ArrayList<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
@@ -113,7 +113,7 @@ public class Restaurant {
         } while (!ok);
     }
 
-    private void cartAction(ArrayList<Product> pickedProducts) {
+    private void cartAction(List<Product> pickedProducts) {
         boolean ok = true;
         int option;
 
@@ -144,8 +144,8 @@ public class Restaurant {
 
     }
 
-    private ArrayList<Product> pickProducts() {
-        ArrayList<Product> pickedProducts = new ArrayList<Product>();
+    private List<Product> pickProducts() {
+        List<Product> pickedProducts = new ArrayList<Product>();
         Integer cartOption = this.products.size();
         Integer closeOption = cartOption + 1;
         Integer option;
@@ -178,7 +178,7 @@ public class Restaurant {
     }
 
     public Order placeOrder(User currentUser) {
-        ArrayList<Product> pickedProducts = this.pickProducts();
+        List<Product> pickedProducts = this.pickProducts();
         Order currentOrder = Order.createNewOrder(this, currentUser, pickedProducts);
 
         System.out.println("Congratulations, your order has been successfully placed!");

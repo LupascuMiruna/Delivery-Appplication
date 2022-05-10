@@ -1,6 +1,7 @@
 package com.company.entities;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class User {
@@ -9,7 +10,7 @@ public class User {
     private String password;
     private String email;
     private boolean isAdmin;
-    private TreeSet<Order> orders = new TreeSet<>();
+    private Set<Order> orders = new TreeSet<>();
     //list of orders
 
     public User(String name, Adress adress, String password, String email) {

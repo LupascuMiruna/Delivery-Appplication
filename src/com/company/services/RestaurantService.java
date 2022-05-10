@@ -4,10 +4,11 @@ import com.company.entities.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class RestaurantService {
-    ArrayList<Restaurant> restaurants = new ArrayList<>();
+    List<Restaurant> restaurants = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
     ReadService readService;
 
