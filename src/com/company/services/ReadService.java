@@ -112,7 +112,12 @@ public class ReadService {
                 products.add(product);
                 line = buffer.readLine();
             }
-        } catch (Exception e) {
+        }catch (FileNotFoundException e) {
+            System.out.println("No file with products for restaurant number ");
+            return products;
+
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return products;

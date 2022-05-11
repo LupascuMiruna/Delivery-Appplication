@@ -1,5 +1,8 @@
 package com.company.services;
 
+import com.company.DatabaseTables.AddressDatabeses;
+import com.company.DatabaseTables.RestaurantDatabases;
+import com.company.DatabaseTables.UserDatabases;
 import com.company.entities.Adress;
 import com.company.entities.ConsoleReader;
 import com.company.entities.County;
@@ -17,7 +20,16 @@ public class UserService implements IUserManager {
 
     public UserService() {
         this.readService = ReadService.getInstance();
-        users = readService.readUsers();
+        /***
+         * PART 2: READ FROM FILE
+         * users = readService.readUsers();
+         */
+        //users = readService.readUsers();
+        /***
+         * PART 3: STORED IN DB
+         */
+        AddressDatabeses addressDatabeses = AddressDatabeses.getInstance();
+        this.users = UserDatabases.getInstance().getAllUsers(addressDatabeses);
     }
 
     static User searchUser(String email, String password) {

@@ -1,11 +1,10 @@
 package com.company.services;
 
+import com.company.DatabaseTables.AddressDatabeses;
+import com.company.DatabaseTables.RestaurantDatabases;
 import com.company.entities.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class RestaurantService {
     List<Restaurant> restaurants = new ArrayList<>();
@@ -15,8 +14,19 @@ public class RestaurantService {
     public RestaurantService() {
         Adress a1 = new Adress(County.IASI, "Iasi", "Unirii", 20);
         this.readService = ReadService.getInstance();
-        
-        this.restaurants = readService.readRestaurants();
+
+        /***
+         * PART 2 --> read from files
+         * this.restaurants = readService.readRestaurants();
+         */
+        //this.restaurants = readService.readRestaurants();
+
+        /***
+         * PART 3
+         */
+        AddressDatabeses addressDatabeses = AddressDatabeses.getInstance();
+        this.restaurants = RestaurantDatabases.getInstance().getAllRestaurants(addressDatabeses);
+
         
 //        ArrayList<Product> productsToAdd = new ArrayList<>();
 //        productsToAdd.add(new Drink("Coca-cola", 12.0, false));
